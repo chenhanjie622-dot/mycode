@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/default.qss</file>
+        <file>image/bk.png</file>
+        <file>image/loginBG.jpg</file>
+        <file>image/imageError.png</file>
+        <file>image/downarrow.png</file>
+        <file>image/addrack.png</file>
+        <file>image/rackItem.png</file>
+        <file>image/loginBG.png</file>
+        <file>image/lock.png</file>
+        <file>image/user.png</file>
+        <file>image/password-dis.png</file>
+        <file>image/password-en.png</file>
+        <file>image/assembly.png</file>
+        <file>image/icon.png</file>
+        <file>image/selectedBG.png</file>
+        <file>image/setting.png</file>
+        <file>image/shrink.png</file>
+        <file>image/stretch.png</file>
+        <file>image/assemblyBG.png</file>
+        <file>image/assemblyLeftBG.png</file>
+        <file>image/assemblys.png</file>
+        <file>image/settings.png</file>
+        <file>image/demo1.png</file>
+        <file>image/demo2.png</file>
+        <file>image/titleBG.png</file>
+        <file>image/userassemblyitem.png</file>
+        <file>image/tasklist.png</file>
+        <file>image/userassemblyitemI.png</file>
+    </qresource>
+</RCC>

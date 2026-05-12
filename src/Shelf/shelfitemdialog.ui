@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ShelfItemDialog</class>
+ <widget class="QDialog" name="ShelfItemDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>货位硬件控制面板</string>
+  </property>
+  <property name="styleSheet">
+   <string>
+QDialog { background-color: #f3f4f6; }
+QLabel { color: #1f2937; font-family: &quot;Microsoft YaHei&quot;, sans-serif; }
+QLineEdit { min-height: 32px; border: 1px solid #d1d5db; border-radius: 4px; padding-left: 8px; background-color: #ffffff; color: #111827; font-size: 13px; }
+QLineEdit:focus { border-color: #3b82f6; }
+QSpinBox { min-height: 32px; font-size: 13px; }
+
+/* 默认通用按钮样式 (包含修改、执行校准、取消等) */
+QPushButton { min-height: 32px; border-radius: 4px; font-weight: bold; font-family: &quot;Microsoft YaHei&quot;, sans-serif; padding: 0 10px; background-color: #ffffff; color: #111827; border: 1px solid #d1d5db; }
+QPushButton:hover { background-color: #f9fafb; }
+QPushButton:pressed { background-color: #e5e7eb; border-color: #9ca3af; }
+
+/* 底部保存并应用按钮 */
+QPushButton#btn_save_db { background-color: #3b82f6; color: #ffffff; border: none; font-size: 14px; }
+QPushButton#btn_save_db:hover { background-color: #2563eb; }
+QPushButton#btn_save_db:pressed { background-color: #1d4ed8; }
+
+/* 下发计划按钮 */
+QPushButton#btnUpdatePlanQty { background-color: #10b981; color: #ffffff; border: none; }
+QPushButton#btnUpdatePlanQty:hover { background-color: #059669; }
+QPushButton#btnUpdatePlanQty:pressed { background-color: #047857; }
+
+/* 结束(清零)按钮 */
+QPushButton#btnClearOperation { background-color: #ef4444; color: #ffffff; border: none; }
+QPushButton#btnClearOperation:hover { background-color: #dc2626; }
+QPushButton#btnClearOperation:pressed { background-color: #b91c1c; }
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="mainVerticalLayout">
+   <property name="spacing">
+    <number>15</number>
+   </property>
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="layoutPosition">
+     <item>
+      <widget class="QLabel" name="label_shelfindex">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>货位位置：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_shelfindex_value">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string>color: #111827;</string>
+       </property>
+       <property name="text">
+        <string>A-1-1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacerPosition">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelRealTimeQty">
+     <property name="font">
+      <font>
+       <pointsize>32</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>color: #166534; background-color: #dcfce7; border: 1px solid #bbf7d0; border-radius: 8px; padding: 15px;</string>
+     </property>
+     <property name="text">
+      <string>现存总数: -- 个</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameForm">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="horizontalSpacing">
+       <number>15</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>15</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelName_">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>物料名称：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="layoutNameField">
+        <item>
+         <widget class="QLineEdit" name="lineEditName">
+          <property name="placeholderText">
+           <string>请输入名称</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnUpdateName">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>修改</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelSpec_">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>物料规格：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="layoutSpecField">
+        <item>
+         <widget class="QLineEdit" name="lineEditSpec">
+          <property name="placeholderText">
+           <string>请输入规格</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnUpdateSpec">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>修改</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelCode_">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>物料编码：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="layoutCodeField">
+        <item>
+         <widget class="QLineEdit" name="lineEditCode">
+          <property name="placeholderText">
+           <string>请输入编码</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnUpdateCode">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>修改</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelCalibrate_">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>校准数量：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="layoutCalibrateField">
+        <item>
+         <widget class="QSpinBox" name="spinBoxQuantity">
+          <property name="suffix">
+           <string> 个</string>
+          </property>
+          <property name="maximum">
+           <number>99999</number>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::PlusMinus</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnUpdateQuantity">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>执行校准</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelPlan_">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>拣选计划：</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="layoutPlanField">
+        <item>
+         <widget class="QSpinBox" name="spinBoxPlanQty">
+          <property name="suffix">
+           <string> 个</string>
+          </property>
+          <property name="maximum">
+           <number>99999</number>
+          </property>
+          <property name="buttonSymbols">
+           <enum>QAbstractSpinBox::PlusMinus</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnUpdatePlanQty">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>下发拣选</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnClearOperation">
+          <property name="minimumWidth">
+           <number>90</number>
+          </property>
+          <property name="text">
+           <string>结束(清零)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="mainVerticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="layoutBottomButtons">
+     <property name="spacing">
+      <number>15</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacerBottom">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_save_db">
+       <property name="minimumWidth">
+        <number>140</number>
+       </property>
+       <property name="text">
+        <string>保存并应用</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="minimumWidth">
+        <number>100</number>
+       </property>
+       <property name="text">
+        <string>取消面板</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

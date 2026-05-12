@@ -1,0 +1,493 @@
+﻿/******************登录******************/
+LogInDialog {
+    border-image: url(:/image/loginBG.png);
+}
+
+QFrame#frameLogin {
+    background-color: rgba(29, 34, 47, 0.6); /* 完全不透明 */
+    border-radius: 10px;
+    border: 1px solid rgba(102, 136, 161, 0.6);
+}
+
+QPushButton#btn_login{
+    min-height:30px;
+    min-width:110px;
+    background-color: #0078FF;
+    border-width: 0px;
+    border-radius: 5px;
+    color:white;
+    font-size : 15px;
+}
+
+QLabel#label_welcome{
+    border-width: 0px;
+    border-radius: 6px;
+    font-size : 20px;
+    color:white;
+}
+
+QLineEdit#lineEdit_user,
+QLineEdit#lineEdit_password{
+    min-height:35px;
+    min-width:200px;
+    border-radius: 5px;
+    font-size : 15px;
+    border-width: 1px;
+    color:white;
+    background: rgba(56, 62, 76, 1);
+}
+
+QCheckBox#cb_user{
+    font-size : 13px;
+    color:white;
+}
+
+/******************首页******************/
+HomeDialog{
+    border-image:url(:/image/bk.png);
+}
+
+QPushButton#btnUserManager,
+QPushButton#btnImport,
+QPushButton#btnSave,
+QPushButton#btnPersonalCenter,
+QPushButton#btnAssembly,
+QPushButton#btnLogout,
+QPushButton#btnStorageRack{
+    min-height:30px;
+    min-width:110px;
+    background-color: #0078FF;
+    border-width: 0px;
+    border-radius: 6px;
+    color:white;
+    font-size : 15px;
+}
+
+/******************步骤模块******************/
+QFrame#frame_step {
+    background-color: rgba(255, 255, 255, 255); /* 完全不透明 */
+    border-radius: 6px;
+    border: 1px solid #BEBFC3;
+}
+
+QLabel#label_step_key,
+QLabel#label_step_value,
+QLabel#label_image_key,
+QLabel#label_rack_key{
+    font-size : 15px;
+}
+
+QScrollArea#scrollAreaStep
+{
+    background-color: transparent;
+}
+
+QWidget#scrollAreaWidge
+{
+    background-color: transparent;
+}
+
+QTableView#tableView_step {
+    alternate-background-color: #DDF0FA;
+    background-color: white;
+    gridline-color: #e0e0e0;
+    font-size: 15px;
+    border: 1px solid #BEBFC3;
+}
+
+QTableView#tableView_step QHeaderView::section {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+}
+
+QPushButton#btn_addrack{
+    min-height:35px;
+    min-width:35px;
+    border-image:url(:/image/addrack.png);
+    background-color: transparent;
+}
+
+/******************步骤模块-货架******************/
+QLabel#label_row,
+QLabel#label_column,
+QLabel#label_count{
+    font-size : 12px;
+}
+
+QLineEdit#lineedit_count{
+    min-height:25px;
+    min-width:40px;
+    max-height:25px;
+    max-width:40px;
+    border-radius: 6px;
+    font-size : 12px;
+    border-width: 1px;
+    border: 1px solid #BEBFC3;
+}
+
+QComboBox#cbb_row,
+QComboBox#cbb_column{
+    min-height:25px;
+    min-width:35px;
+    max-height:25px;
+    max-width:35px;
+    border-radius: 6px;
+    font-size: 12px;
+    border-width: 1px;
+    border: 1px solid #BEBFC3;
+    /* 隐藏默认的下拉箭头 */
+    combobox-popup: 0;
+    padding-left: 10px;
+}
+
+QComboBox#cbb_row::drop-down,
+QComboBox#cbb_column::drop-down{
+    border: none;
+}
+
+QComboBox#cbb_row::down-arrow,
+QComboBox#cbb_column::down-arrow{
+    image: url(:/image/downarrow.png);
+    min-width: 15px;
+    min-height: 15px;
+    max-width: 15px;
+    max-height: 15px;
+    margin-right: 5px;
+}
+
+QScrollArea#scrollAreaRack
+{
+    min-height: 55px;
+}
+
+/****************** 用户管理界面 ******************/
+/* 整个对话框背景 */
+#UserManagerDialog {
+    border-image: url(:/image/bk.png);
+}
+
+/* 表格风格：让它看起来更现代 */
+QTableWidget {
+    background-color: rgba(255, 255, 255, 0.9); /* 半透明白色卡片感 */
+    border: 1px solid #0078FF;
+    border-radius: 8px;
+    gridline-color: #dcdfe6;
+}
+
+QHeaderView::section {
+    background-color: #0078FF;
+    color: white;
+    padding: 4px;
+    border: none;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #3393FF;
+}
+
+QPushButton:pressed {
+    background-color: #0056B3;
+}
+
+/******************个人中心******************/
+PersonalCenterDialog{
+    border-image:url(:/image/bk.png);
+}
+
+QFrame#frame_personal_center {
+    background-color: rgba(255, 255, 255, 230); /* 半透明背景 */
+    border-radius: 6px;
+    border: 1px solid #BEBFC3;
+    min-width: 500px;
+    min-height: 400px;
+}
+
+/* 个人信息标签样式 */
+QLabel#label_personal_title{
+    border-width: 0px;
+    border-radius: 6px;
+    font-size : 18px;
+    font-weight: bold;
+    color: #333333;
+}
+
+QLabel#label_name,
+QLabel#label_telephone,
+QLabel#label_username,
+QLabel#label_role,
+QLabel#label_create_time,
+QLabel#label_modify_time,
+QLabel#label_old_password,
+QLabel#label_new_password,
+QLabel#label_confirm_password{
+    min-height: 30px;
+    font-size : 15px;
+    color: #333333;
+}
+
+/* 输入框样式 */
+QLineEdit#lineEditName,
+QLineEdit#lineEditTelephone,
+QLineEdit#lineEditOldPwd,
+QLineEdit#lineEditNewPwd,
+QLineEdit#lineEditConfirmPwd{
+    min-height: 35px;
+    min-width: 200px;
+    border-radius: 6px;
+    font-size : 15px;
+    border-width: 1px;
+    border: 1px solid #BEBFC3;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+/* 按钮样式 */
+QPushButton#btnSave,
+QPushButton#btnCancel,
+QPushButton#btnTogglePwd{
+    min-height: 30px;
+    min-width: 80px;
+    border-width: 0px;
+    border-radius: 4px;
+    color: white;
+    font-size : 13px;
+}
+
+/* 保存按钮 */
+QPushButton#btnSave{
+    background-color: #28a745; /* 绿色，表示确认保存 */
+}
+
+/* 取消按钮 */
+QPushButton#btnCancel{
+    background-color: #6c757d; /* 灰色，表示取消 */
+}
+
+/* 显示/隐藏密码按钮 */
+QPushButton#btnTogglePwd{
+    background-color: #17a2b8; /* 蓝绿色，表示切换功能 */
+    min-width: 120px;
+}
+
+/* 只读标签样式 */
+QLabel#label_read_only{
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+    color: #495057;
+}
+
+/* 分组框样式 */
+QGroupBox#groupBox_basic_info,
+QGroupBox#groupBox_password{
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    margin-top: 1ex; /* 留出标题的空间 */
+    padding-top: 10px;
+}
+
+QGroupBox#groupBox_basic_info::title,
+QGroupBox#groupBox_password::title{
+    subcontrol-origin: margin;
+    subcontrol-position: top center; /* position at the top center */
+    left: 10px;
+    padding: 0 5px 0 5px;
+}
+
+/* 表单布局间距 */
+QFormLayout#formLayout_personal{
+    spacing: 15px;
+    margin: 20px;
+}
+
+/* 提示信息样式 */
+QLabel#label_tips{
+    font-size: 13px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* 输入框焦点样式 */
+QLineEdit:focus{
+    border: 2px solid #007bff;
+    outline: none;
+}
+
+/* 按钮悬停效果 */
+QPushButton:hover{
+    opacity: 0.9;
+}
+
+QPushButton:pressed{
+    opacity: 0.8;
+}
+
+
+/******************组装界面******************/
+AssemblyDialog{
+    border-image:url(:/image/bk.png);
+}
+
+/* ===== 主容器===== */
+QFrame#frameAssembly{
+    background-color: rgba(255, 255, 255, 230);
+    border-radius: 8px;
+    border: 1px solid #BEBFC3;
+}
+
+/* ===== 按钮===== */
+QPushButton#btnPlay,
+QPushButton#btnPause,
+QPushButton#btnBack,
+QPushButton#btnNext,
+QPushButton#btnPrev{
+    min-height:30px;
+    min-width:110px;
+    background-color:#0078FF;
+    border-width:0px;
+    border-radius:6px;
+    color:white;
+    font-size:15px;
+}
+
+/* hover*/
+QPushButton#btnPlay:hover,
+QPushButton#btnPause:hover,
+QPushButton#btnNext:hover,
+QPushButton#btnPrev:hover{
+    background-color:#3399FF;
+}
+
+/* ===== 步骤卡片 ===== */
+QFrame#frameStep{
+    background-color: rgba(255,255,255,220);
+    border-radius:10px;
+    border:1px solid #E5E6EB;
+}
+
+/* ===== 当前步骤高亮===== */
+QFrame#frameStep[current="true"]{
+    border:2px solid #0078FF;
+}
+
+/* ===== 标题文字 ===== */
+QLabel#labelTitle{
+    font-size:18px;
+    font-weight:bold;
+    color:#333333;
+}
+
+/* ===== 普通说明文字 ===== */
+QLabel#labelStep{
+    font-size:15px;
+    color:#555555;
+}
+
+/* ===== 视频区域 ===== */
+QFrame#frameVideo{
+    background-color:black;
+    border-radius:10px;
+}
+
+/* ===== 滚动区域 ===== */
+QScrollArea{
+    border:none;
+}
+
+/* ===== 滚动条 ===== */
+QScrollBar:vertical{
+    width:8px;
+    background:transparent;
+}
+
+QScrollBar::handle:vertical{
+    background:#0078FF;
+    border-radius:4px;
+}
+
+
+/******************货架配置&展示******************/
+ShelfDisplayDialog{
+    border-image:url(:/image/bk.png);
+}
+
+QLabel#label_shelfImage{
+    min-height:90px;
+    border-image:url(:/image/rackItem.png);
+}
+
+QLabel#label_shelfindex,
+QLabel#label_shelfname,
+QLabel#label_shelfcount,
+QLabel#label_shelfindex_value,
+QLabel#label_shelfname_value,
+QLabel#label_shelfcount_value{
+    font-size : 13px;
+}
+
+QPushButton#btn_shelf_edit{
+    min-height:25px;
+    min-width:70px;
+    background-color: #0078FF;
+    border-width: 0px;
+    border-radius: 6px;
+    color:white;
+    font-size : 13px;
+}
+
+QScrollArea#scrollAreaShelf{
+    background-color: transparent;
+}
+
+
+QPushButton#btn_shelfdlg_configure,
+QPushButton#btn_shelfdlg_refresh,
+QPushButton#btn_import_parts,
+QPushButton#btn_shelfdlg_back{
+    min-height:30px;
+    min-width:110px;
+    background-color: #0078FF;
+    border-width: 0px;
+    border-radius: 6px;
+    color:white;
+    font-size : 15px;
+}
+
+/******************新增用户装配******************/
+QCheckBox#cbShrink::indicator:unchecked {
+    image: url(:/image/shrink.png);
+    width: 40px;
+    height: 40px;
+}
+
+QCheckBox#cbShrink::indicator:checked {
+    image: url(:/image/stretch.png);
+    width: 80px;
+    height: 40px;
+}
+
+QLabel#labelAssembly{
+    font-size:14px;
+    color: #FFFFFF;
+    background-color: transparent;
+}
+
+QFrame#leftSidebar {
+    border-image:url(:/image/assemblyLeftBG.png);
+}
+
+QFrame#rightSidebar{
+    border-image:url(:/image/assemblyBG.png);
+}
+
+
