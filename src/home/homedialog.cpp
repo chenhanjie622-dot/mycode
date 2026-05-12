@@ -111,6 +111,7 @@ void HomeDialog::InitUI()
     connect(ui->tableView_step->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &HomeDialog::onDeviceTypeSelected);
 
+
     // 创建滚动区域的widget和布局
     m_scrollAreaWidget = new QWidget();
     m_tutorialLayout = new QVBoxLayout(m_scrollAreaWidget);
@@ -165,7 +166,10 @@ void HomeDialog::InitUI()
     // 开启触控屏手指滑动支持 (iPad 体验)
     QScroller::grabGesture(ui->tableView_step->viewport(), QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(ui->scrollAreaStep->viewport(), QScroller::LeftMouseButtonGesture);
+
+    loadMainCategories();
 }
+
 
 // 核心：实现按钮显隐
 void HomeDialog::setUserManagerBtnVisible(bool visible)
@@ -588,23 +592,31 @@ void HomeDialog::onDeviceTypeSelected()
     }
 }
 
-// ======== 以下为本次新增的所有目录控制方法 ========
+
 void HomeDialog::loadMainCategories()
 {
     m_isInSubCategoryView = false;
     m_currentMainCategory = "";
-    m_categoryControlWidget->hide(); // 隐藏返回和新增等按钮
 
-    QStandardItemModel *model = qobject_cast<QStandardItemModel*>(ui->tableView_step->model());
-    model->removeRows(0, model->rowCount());
-
-    QStringList items = {"PCR安装", "大型一体机安装", "桌面一体机安装", "手持设备安装", "其他设备安装"};
-    for(int i = 0; i < items.count(); i++) {
-        QStandardItem *idItem = new QStandardItem(items.at(i));
-        idItem->setTextAlignment(Qt::AlignCenter);
-        model->setItem(i, idItem);
+    // 1. 安全隐藏控制面板
+    if (m_categoryControlWidget) {
+        m_categoryControlWidget->hide();
     }
-    clearTutorialDisplay(); // 清空右侧画面
+
+    // 2. 安全获取并清空列表
+    QStandardItemModel *model = qobject_cast<QStandardItemModel*>(ui->tableView_step->model());
+    if (model) {
+        model->removeRows(0, model->rowCount());
+        QStringList items = {"PCR安装", "大型一体机安装", "桌面一体机安装", "手持设备安装", "其他设备安装"};
+        for(int i = 0; i < items.count(); i++) {
+            QStandardItem *idItem = new QStandardItem(items.at(i));
+            idItem->setTextAlignment(Qt::AlignCenter);
+            model->setItem(i, idItem);
+        }
+    }
+
+    // 3. 调用我们优化后的清空函数
+    clearTutorialDisplay();
 }
 
 void HomeDialog::loadSubCategories(const QString& mainCategory)
@@ -664,17 +676,17 @@ void HomeDialog::on_btnDelSub_clicked()
 
 void HomeDialog::clearTutorialDisplay()
 {
-    // 保留第一个（按钮栏）
+    // 安全检查
+    if (!m_tutorialLayout) return;
+
+    // 从索引 1 开始删除（保留索引 0 的按钮栏）
     while (m_tutorialLayout->count() > 1)
     {
-        QLayoutItem *child = m_tutorialLayout->takeAt(1);
-
-        QWidget *widget = child->widget();
-        if (widget) {
+        QLayoutItem *item = m_tutorialLayout->takeAt(1);
+        if (QWidget *widget = item->widget()) {
             widget->hide();
         }
-
-        delete child;
+        delete item; // 仅仅删除布局项包装，保留实际的 widget 卡片
     }
 }
 
@@ -789,7 +801,17 @@ void HomeDialog::on_btnSave_clicked()
         info.rackdata = rackdataList.join("^");
 
         qDebug() << ">>> 正在保存" << var << "的多零件配置:" << info.rackdata;
-        ret = db.UpdateStepInfo(info);
+        // 🚩 【核心修复】：判断数据库中是否已经有这条记录
+        StepInfo checkInfo;
+        checkInfo.stepname = var;
+        if (db.queryStepInfo(checkInfo)) {
+            // 如果存在，更新数据
+            ret = db.UpdateStepInfo(info);
+        } else {
+            // 如果不存在（比如刚建的子目录），必须新增数据！
+            ret = db.AddStepInfo(info);
+        }
+
         if(!ret) break;
     }
 

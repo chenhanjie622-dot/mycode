@@ -79,34 +79,34 @@ void FileProcessing::processFilesInBottomLevelDirectory(const QString &dirPath, 
 {
     QDir dir(dirPath);
     QStringList filters;
-    filters << "*.jpg" << "*.png" << "*.jpeg" << "*.mp4" << "*.avi"; // 添加更多文件类型
+    // 【恢复】：去掉 "*.txt"
+    filters << "*.jpg" << "*.png" << "*.jpeg" << "*.mp4" << "*.avi";
     QFileInfoList files = dir.entryInfoList(filters, QDir::Files);
 
     m_stepPath[key] << dir.dirName();
-    // qDebug() << "Path:" << dir.dirName();
 
     QString imagePath = "";
     QString videoPath = "";
 
-    // 先查找图片
+    // 查找图片
     for (const QFileInfo &file : std::as_const(files)) {
         if (file.isFile()) {
             QString suffix = file.suffix().toLower();
             if (suffix == "jpg" || suffix == "png" || suffix == "jpeg") {
                 imagePath = file.absoluteFilePath();
-                // qDebug() << "Image: " << imagePath;
+                break;
             }
         }
     }
     m_stepPath[key] << imagePath;
 
-    // 再查找视频
+    // 查找视频
     for (const QFileInfo &file : std::as_const(files)) {
         if (file.isFile()) {
             QString suffix = file.suffix().toLower();
             if (suffix == "mp4" || suffix == "avi") {
                 videoPath = file.absoluteFilePath();
-                // qDebug() << "Video: " << videoPath;
+                break;
             }
         }
     }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>412</width>
-    <height>240</height>
+    <height>270</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -18,36 +18,6 @@
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QLabel#label,
-QLabel#label_3,
-QLabel#label_4,
-QLabel#label_5,
-QLabel#label_7,
-QLabel#label_8,
-QLabel#label_9{
-color: rgb(255, 255, 255);
-background-color: transparent;
-}
-
-QLabel#label_2,
-QLabel#label_6{
-font: 16pt &quot;Microsoft YaHei UI&quot;;
-color: rgb(0, 185, 255);
-}
-
-
-QFrame#frame,
-QFrame#frame_2,
-QFrame#frame_3,
-QFrame#frame_4{
-border-image: url(:/image/userassemblyitemI.png);
-}
-
-QWidget#UserAssemblyItemDialog{
-border-image: url(:/image/userassemblyitem.png);
-}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" colspan="2">
@@ -194,6 +164,12 @@ border-image: url(:/image/userassemblyitem.png);
    </item>
    <item row="1" column="1" rowspan="3">
     <widget class="QLabel" name="label_10">
+     <property name="maximumSize">
+      <size>
+       <width>337</width>
+       <height>290</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">border-image: url(:/image/demo1.png);</string>
      </property>

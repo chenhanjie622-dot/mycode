@@ -1,17 +1,24 @@
 #include "usersettingsdialog.h"
-#include "ui_usersettingsdialog.h" // 这个文件是 Qt 编译 ui 后自动生成的
+#include "ui_usersettingsdialog.h"
+#include <QDebug>
+#include <QElapsedTimer>
 
 UserSettingsDialog::UserSettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
+    QElapsedTimer timer;
+    timer.start();
+
+    qint64 t0 = timer.elapsed();
     ui->setupUi(this);
+    qDebug() << "[Settings] setupUi 耗时:" << (timer.elapsed() - t0) << "ms";
 
-    // 1. 去掉窗口标准边框（可选，如果需要像图中那样的自定义窗口）
-    // setWindowFlags(Qt::FramelessWindowHint);
-
-    // 2. 初始化导航按钮组
+    qint64 t1 = timer.elapsed();
     initButtonGroup();
+    qDebug() << "[Settings] initButtonGroup 耗时:" << (timer.elapsed() - t1) << "ms";
+
+    qDebug() << "[Settings] 构造函数总耗时:" << timer.elapsed() << "ms";
 }
 
 UserSettingsDialog::~UserSettingsDialog()

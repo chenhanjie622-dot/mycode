@@ -13,9 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">border-image: url(:/image/tasklist.png);</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>10</number>
@@ -45,6 +42,9 @@ background-color: transparent;</string>
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="styleSheet">
+      <string notr="true">background-color: transparent;</string>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -53,9 +53,12 @@ background-color: transparent;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>700</width>
-        <height>378</height>
+        <width>698</width>
+        <height>376</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_item">
        <property name="spacing">

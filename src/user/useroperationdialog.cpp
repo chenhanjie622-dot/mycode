@@ -9,6 +9,8 @@
 #include <QPropertyAnimation>
 #include <QEasingCurve>
 #include <QResizeEvent>
+#include <QDebug>
+#include <QElapsedTimer>
 
 // useroperationdialog.cpp
 
@@ -17,17 +19,36 @@ UserOperationDialog::UserOperationDialog(QWidget *parent)
     ui(new Ui::UserOperationDialog),
     leftAnim(nullptr),
     rightAnim(nullptr),
-    m_assembly(new UserAssemblyDialog(this)),
-    m_settings(new UserSettingsDialog(this)),
+    m_assembly(nullptr),
+    m_settings(nullptr),
     // 关键：如果初始 checkBox 是未选中的，则初始状态应为收缩
     // 请确保 UI 文件中的 checkBox 初始状态是 Unchecked
     isLeftSidebarExpanded(false)
 {
+    QElapsedTimer timer;
+    timer.start();
+
+    qint64 t0 = timer.elapsed();
     ui->setupUi(this);
+    qDebug() << "[UserOperation] setupUi 耗时:" << (timer.elapsed() - t0) << "ms";
 
+    qint64 t1 = timer.elapsed();
+    m_assembly = new UserAssemblyDialog(this);
+    qDebug() << "[UserOperation] new UserAssemblyDialog 耗时:" << (timer.elapsed() - t1) << "ms";
+
+    qint64 t2 = timer.elapsed();
+    m_settings = new UserSettingsDialog(this);
+    qDebug() << "[UserOperation] new UserSettingsDialog 耗时:" << (timer.elapsed() - t2) << "ms";
+
+    qint64 t3 = timer.elapsed();
     InitUI();
+    qDebug() << "[UserOperation] InitUI 耗时:" << (timer.elapsed() - t3) << "ms";
 
+    qint64 t4 = timer.elapsed();
     InitConnect();
+    qDebug() << "[UserOperation] InitConnect 耗时:" << (timer.elapsed() - t4) << "ms";
+
+    qDebug() << "[UserOperation] 构造函数总耗时:" << timer.elapsed() << "ms";
 }
 
 UserOperationDialog::~UserOperationDialog()
@@ -37,6 +58,9 @@ UserOperationDialog::~UserOperationDialog()
 
 void UserOperationDialog::InitUI()
 {
+    QElapsedTimer uiTimer;
+    uiTimer.start();
+
     QFrame *leftSidebar = ui->leftSidebar;
     QFrame *rightSidebar = ui->rightSidebar;
     QCheckBox *checkBox = ui->cbShrink;
@@ -59,6 +83,7 @@ void UserOperationDialog::InitUI()
     // 连接到 checkStateChanged(Qt::CheckState) 信号
     connect(checkBox, &QCheckBox::checkStateChanged, this, &UserOperationDialog::onCheckBoxToggled);
 
+    qint64 t_icon1 = uiTimer.elapsed();
     QSize iconS(40, 40);
 
     // --- 1. 处理 tbtn_icon (保持不变) ---
@@ -67,7 +92,9 @@ void UserOperationDialog::InitUI()
     icon_title.addFile(":/image/icon.png", QSize(), QIcon::Disabled, QIcon::Off);
     ui->tbtn_icon->setIcon(icon_title);
     ui->tbtn_icon->setIconSize(iconS);
+    qDebug() << "[InitUI] 加载 icon.png 耗时:" << (uiTimer.elapsed() - t_icon1) << "ms";
 
+    qint64 t_icon2 = uiTimer.elapsed();
     // --- 2. 处理其他按钮图标 (保持不变) ---
     QIcon icon_assembly(":/image/assembly.png");
     icon_assembly.addFile(":/image/assemblys.png", QSize(), QIcon::Normal, QIcon::On);
@@ -78,6 +105,7 @@ void UserOperationDialog::InitUI()
     icon_setting.addFile(":/image/settings.png", QSize(), QIcon::Normal, QIcon::On);
     ui->tbtn_setting->setIcon(icon_setting);
     ui->tbtn_setting->setIconSize(iconS);
+    qDebug() << "[InitUI] 加载 assembly/setting 图标 耗时:" << (uiTimer.elapsed() - t_icon2) << "ms";
 
     // --- 3. 设置状态与默认选中 ---
     ui->tbtn_icon->setCheckable(false);
@@ -88,6 +116,7 @@ void UserOperationDialog::InitUI()
 
     ui->tbtn_setting->setCheckable(true);
 
+    qint64 t_style = uiTimer.elapsed();
     // --- 4. 初始化 Frame 背景 ---~
     // 默认显示装配页面的背景
     ui->assembly_frame->setStyleSheet("QFrame {border-image: url(:/image/selectedBG.png);}");
@@ -121,20 +150,38 @@ void UserOperationDialog::InitUI()
         "QToolButton:checked {"
         "   color: #00B9FF;"                // 选中时字体颜色
         "}";
+    // 1. 预先拼接好
+    QString styleGray = btnStyle.arg("7D8890");
+    QString styleWhite = btnStyle.arg("FFFFFF");
 
-    ui->tbtn_assembly->setStyleSheet(btnStyle.arg("7D8890"));
-    ui->tbtn_setting->setStyleSheet(btnStyle.arg("7D8890"));
-    ui->tbtn_icon->setStyleSheet(btnStyle.arg("FFFFFF")); // 虽然 icon 按钮不选中，但统一样式比较好
+    // 2. 直接赋值（虽然还是慢，但省去了 arg 的开销）
+    ui->tbtn_assembly->setStyleSheet(styleGray);
+    ui->tbtn_setting->setStyleSheet(styleGray);
+    ui->tbtn_icon->setStyleSheet(styleWhite);
+    qDebug() << "[InitUI] 设置样式表+字号+文字 耗时:" << (uiTimer.elapsed() - t_style) << "ms";
 
+    qint64 t_stack = uiTimer.elapsed();
     // --- 8. 页面与信号槽 ---
-    ui->stackedWidget->setCurrentIndex(0); // 默认显示第0页
+    qint64 t_ins1 = uiTimer.elapsed();
     ui->stackedWidget->insertWidget(0, m_assembly);
+    qDebug() << "[InitUI] stackedWidget insertWidget(0, m_assembly) 耗时:" << (uiTimer.elapsed() - t_ins1) << "ms";
+
+    qint64 t_ins2 = uiTimer.elapsed();
     ui->stackedWidget->insertWidget(1, m_settings);
+    qDebug() << "[InitUI] stackedWidget insertWidget(1, m_settings) 耗时:" << (uiTimer.elapsed() - t_ins2) << "ms";
+
+    qint64 t_setcur = uiTimer.elapsed();
+    ui->stackedWidget->setCurrentIndex(0); // 默认显示第0页
+    qDebug() << "[InitUI] stackedWidget setCurrentIndex(0) 耗时:" << (uiTimer.elapsed() - t_setcur) << "ms";
+
+    qDebug() << "[InitUI] stackedWidget 插入页面总耗时:" << (uiTimer.elapsed() - t_stack) << "ms";
 
     m_navGroup = new QButtonGroup(this);
     m_navGroup->addButton(ui->tbtn_assembly, 0);
     m_navGroup->addButton(ui->tbtn_setting, 1);
     m_navGroup->setExclusive(true);
+
+    qDebug() << "[InitUI] InitUI 总耗时:" << uiTimer.elapsed() << "ms";
 }
 
 void UserOperationDialog::InitConnect()

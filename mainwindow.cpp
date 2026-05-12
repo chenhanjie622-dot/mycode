@@ -5,6 +5,8 @@
 #include "personalcenterdialog.h"
 #include <QGuiApplication>
 #include <QScreen>
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,12 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
     ,m_userOperation(new UserOperationDialog(this))
 {
     ui->setupUi(this);
-
-    InitUI();
+    ui->stackedWidget->insertWidget(0, m_logdlg);
+    ui->stackedWidget->insertWidget(1, m_homedlg);
+    ui->stackedWidget->insertWidget(2, m_shelfdlg);
+    ui->stackedWidget->insertWidget(3, m_assemblydlg);
+    ui->stackedWidget->insertWidget(4, m_userMgrDlg);
+    ui->stackedWidget->insertWidget(5, m_userOperation);
 
     InitData();
-
     InitConnect();
+
     this->setWindowTitle("你好，欢迎使用柔性装配指导系统");
 }
 
@@ -38,6 +44,7 @@ void MainWindow::InitUI()
     ui->stackedWidget->insertWidget(3, m_assemblydlg);
     ui->stackedWidget->insertWidget(4, m_userMgrDlg);
     ui->stackedWidget->insertWidget(5, m_userOperation);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::InitData()
